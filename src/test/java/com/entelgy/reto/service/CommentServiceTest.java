@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
+import java.util.StringJoiner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,7 +31,7 @@ public class CommentServiceTest {
 
         comment.setId(1);
         comment.setPostId(1);
-        comment.setEmail("example@gmail.com");
+        comment.setEmail("Eliseo@gardner.biz");
 
         listaComment.add(comment);
 
@@ -38,9 +39,15 @@ public class CommentServiceTest {
 
         DataDTO getDataDTO = service.getCommentList();
 
+        StringJoiner concatenado = new StringJoiner("|");
+
+        concatenado.add( "1" );
+        concatenado.add( "1" );
+        concatenado.add( "Eliseo@gardner.biz" );
+
         assertEquals(
-                getDataDTO.getData().get(0).getId(),
-                comment.getId()
+                getDataDTO.getData().get(0),
+                concatenado.toString()
         );
     }
 }

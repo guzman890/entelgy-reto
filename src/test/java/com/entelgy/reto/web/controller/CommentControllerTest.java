@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.StringJoiner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CommentControllerTest {
     @Autowired
     private CommentController controller;
+
     @Mock
     private CommentService service;
 
@@ -31,14 +33,15 @@ public class CommentControllerTest {
 
         DataDTO dataDTO =  new DataDTO();
 
-        ArrayList<CommentDTO> listaComment= new ArrayList<CommentDTO>();
+        ArrayList<String> listaComment= new ArrayList<String>();
 
-        CommentDTO commentDTO = new CommentDTO();
-        commentDTO.setId(1);
-        commentDTO.setPostId(1);
-        commentDTO.setEmail("example@gmail.com");
+        StringJoiner concatenado = new StringJoiner("|");
 
-        listaComment.add(commentDTO);
+        concatenado.add( "1" );
+        concatenado.add( "1" );
+        concatenado.add( "Eliseo@gardner.biz" );
+
+        listaComment.add(concatenado.toString());
 
         dataDTO.setData(listaComment);
 
@@ -47,8 +50,8 @@ public class CommentControllerTest {
         DataDTO getDataDTO = controller.getComments();
 
         assertEquals(
-                getDataDTO.getData().get(0).getId(),
-                dataDTO.getData().get(0).getId()
+                getDataDTO.getData().get(0),
+                dataDTO.getData().get(0)
         );
 
     }
